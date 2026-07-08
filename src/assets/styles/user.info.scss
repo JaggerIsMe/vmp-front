@@ -1,0 +1,56 @@
+.app-header {
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.app-header__title {
+  min-width: 0;
+}
+
+.user-info-menu {
+  flex: 0 0 auto;
+}
+
+.user-info-trigger {
+  display: inline-flex;
+  align-items: center;
+  max-width: 240px;
+  height: 42px;
+  gap: 10px;
+  padding: 4px 10px 4px 6px;
+  color: #111827;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.user-info-trigger:hover {
+  border-color: #2563eb;
+  color: #1d4ed8;
+}
+
+.user-info-trigger span {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-avatar-editor {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .app-header {
+    align-items: flex-start;
+  }
+
+  .user-info-trigger {
+    max-width: 180px;
+  }
+}
