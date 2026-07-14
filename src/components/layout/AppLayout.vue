@@ -16,75 +16,24 @@
         text-color="#cbd5e1"
         active-text-color="#ffffff"
         router
+        unique-opened
       >
-        <el-sub-menu index="marketing-dashboard">
+        <el-sub-menu
+          v-for="menuGroup in authStore.navigationMenus"
+          :key="menuGroup.menuId"
+          :index="menuGroup.menuId"
+        >
           <template #title>
-            <el-icon><DataAnalysis /></el-icon>
-            <span>营销驾驶舱</span>
+            <el-icon><component :is="getMenuIcon(menuGroup)" /></el-icon>
+            <span>{{ menuGroup.title }}</span>
           </template>
-          <el-menu-item index="/marketing-dashboard/product-sales-performance">
-            <el-icon><TrendCharts /></el-icon>
-            <span>产品销售表现</span>
-          </el-menu-item>
-          <el-menu-item index="/marketing-dashboard/order-list">
-            <el-icon><Tickets /></el-icon>
-            <span>订单列表</span>
-          </el-menu-item>
-        </el-sub-menu>
-
-        <el-sub-menu index="traffic-monitor">
-          <template #title>
-            <el-icon><Monitor /></el-icon>
-            <span>流量监控中心</span>
-          </template>
-          <el-menu-item index="/traffic-monitor/product-traffic-monitor">
-            <el-icon><DataLine /></el-icon>
-            <span>产品流量监控</span>
-          </el-menu-item>
-          <el-menu-item index="/traffic-monitor/aba-keyword-heat-monitor">
-            <el-icon><Search /></el-icon>
-            <span>ABA关键词热度监控</span>
-          </el-menu-item>
-        </el-sub-menu>
-
-        <el-sub-menu index="private-domain">
-          <template #title>
-            <el-icon><Connection /></el-icon>
-            <span>私域运营中心</span>
-          </template>
-          <el-menu-item index="/private-domain/qr-code-marketing">
-            <el-icon><Grid /></el-icon>
-            <span>二维码营销</span>
-          </el-menu-item>
-          <el-menu-item index="/private-domain/customer-management">
-            <el-icon><User /></el-icon>
-            <span>客户管理</span>
-          </el-menu-item>
-        </el-sub-menu>
-
-        <el-sub-menu index="voc-analysis">
-          <template #title>
-            <el-icon><ChatLineRound /></el-icon>
-            <span>VOC分析中心</span>
-          </template>
-          <el-menu-item index="/voc-analysis/voc-workbench">
-            <el-icon><DocumentChecked /></el-icon>
-            <span>VOC获取工作台</span>
-          </el-menu-item>
-          <el-menu-item index="/voc-analysis/voc-analysis">
-            <el-icon><DataBoard /></el-icon>
-            <span>VOC分析</span>
-          </el-menu-item>
-        </el-sub-menu>
-
-        <el-sub-menu index="system-management">
-          <template #title>
-            <el-icon><Setting /></el-icon>
-            <span>系统管理</span>
-          </template>
-          <el-menu-item index="/system-management/user-management">
-            <el-icon><UserFilled /></el-icon>
-            <span>用户管理</span>
+          <el-menu-item
+            v-for="menuItem in menuGroup.children"
+            :key="menuItem.menuId"
+            :index="menuItem.fullPath"
+          >
+            <el-icon><component :is="getMenuIcon(menuItem)" /></el-icon>
+            <span>{{ menuItem.title }}</span>
           </el-menu-item>
         </el-sub-menu>
       </el-menu>
@@ -137,6 +86,26 @@ import { useAuthStore } from '@/stores/auth'
 const route = useRoute()
 const authStore = useAuthStore()
 const initializeUserInfoVisible = ref(false)
+
+const menuIconMap = {
+  '/marketing-dashboard': DataAnalysis,
+  '/marketing-dashboard/product-sales-performance': TrendCharts,
+  '/marketing-dashboard/order-list': Tickets,
+  '/traffic-monitor': Monitor,
+  '/traffic-monitor/product-traffic-monitor': DataLine,
+  '/traffic-monitor/aba-keyword-heat-monitor': Search,
+  '/private-domain': Connection,
+  '/private-domain/qr-code-marketing': Grid,
+  '/private-domain/customer-management': User,
+  '/voc-analysis': ChatLineRound,
+  '/voc-analysis/voc-workbench': DocumentChecked,
+  '/voc-analysis/voc-analysis': DataBoard,
+  '/system-management': Setting,
+  '/system-management/user-management': UserFilled,
+  '/system-management/role-management': UserFilled,
+}
+
+const getMenuIcon = (menu) => menuIconMap[menu.fullPath] || menuIconMap[menu.path] || Grid
 
 const activeMenu = computed(() => route.path)
 const pageTitle = computed(() => route.meta.title || '产品销售表现')

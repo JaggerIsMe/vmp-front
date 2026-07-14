@@ -1,11 +1,20 @@
 import { defineStore } from 'pinia'
 import md5 from '@/utils/Md5'
 import request from '@/utils/Request'
+import {
+  buildPermissionMenuTree,
+  collectPermittedPaths,
+  filterNavigableMenuTree,
+  normalizeMenuPath,
+} from '@/utils/MenuPermission'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     userInfo: null,
+    roleInfo: null,
+    permissionMenus: [],
     hasCheckedLogin: false,
+    hasCheckedPermissions: false,
     avatarVersion: Date.now(),
   }),
   getters: {
@@ -20,6 +29,20 @@ export const useAuthStore = defineStore('auth', {
       return `/api/account/getAvatar/${userId}?t=${state.avatarVersion}`
     },
     nickName: (state) => state.userInfo?.nickName || state.userInfo?.account || '当前用户',
+    permissionMenuTree: (state) => buildPermissionMenuTree(state.permissionMenus),
+    navigationMenus() {
+      return filterNavigableMenuTree(this.permissionMenuTree)
+    },
+    permittedPaths() {
+      return collectPermittedPaths(this.permissionMenuTree)
+    },
+    firstPermittedPath() {
+      return this.permittedPaths[0] || ''
+    },
+    hasPagePermission() {
+      const permittedPathSet = new Set(this.permittedPaths)
+      return (path) => permittedPathSet.has(normalizeMenuPath(path))
+    },
   },
   actions: {
     setUserInfo(response) {
@@ -29,6 +52,20 @@ export const useAuthStore = defineStore('auth', {
     clearLogin() {
       this.userInfo = null
       this.hasCheckedLogin = true
+      this.clearPermissionInfo()
+    },
+    clearPermissionInfo() {
+      this.roleInfo = null
+      this.permissionMenus = []
+      this.hasCheckedPermissions = false
+    },
+    setPermissionInfo(response) {
+      const roleInfo = response?.data || response || null
+      this.roleInfo = roleInfo
+      this.permissionMenus = Array.isArray(roleInfo?.roleMenuPermissionsList)
+        ? roleInfo.roleMenuPermissionsList
+        : []
+      this.hasCheckedPermissions = true
     },
     async login(formData) {
       const account = formData.account.trim()
@@ -46,7 +83,7 @@ export const useAuthStore = defineStore('auth', {
         return false
       }
 
-      return this.fetchUserInfo()
+      return this.fetchLoginContext()
     },
     async loginByDingTalk(authCode) {
       const response = await request({
@@ -61,7 +98,17 @@ export const useAuthStore = defineStore('auth', {
         return false
       }
 
-      return this.fetchUserInfo()
+      return this.fetchLoginContext()
+    },
+    async fetchLoginContext() {
+      const isLogin = await this.fetchUserInfo()
+
+      if (!isLogin) {
+        return false
+      }
+
+      await this.fetchPermissionInfo()
+      return true
     },
     async fetchUserInfo() {
       const response = await request({
@@ -77,6 +124,30 @@ export const useAuthStore = defineStore('auth', {
       }
 
       this.setUserInfo(response)
+      return true
+    },
+    async fetchPermissionInfo(options = {}) {
+      const userId = this.userInfo?.userId
+
+      if (!userId) {
+        this.clearPermissionInfo()
+        return false
+      }
+
+      const response = await request({
+        url: `/account/getUserRoleMenuPermissionsInfo/${encodeURIComponent(userId)}`,
+        method: 'get',
+        showLoading: false,
+        showError: options.showError !== false,
+      })
+
+      if (!response?.data) {
+        this.clearPermissionInfo()
+        this.hasCheckedPermissions = true
+        return false
+      }
+
+      this.setPermissionInfo(response)
       return true
     },
     async saveUserInfo(formData) {

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import Message from '@/utils/Message'
 
 const AppLayout = () => import('@/components/layout/AppLayout.vue')
 const LoginPage = () => import('@/views/login/LoginPage.vue')
@@ -16,9 +17,18 @@ const router = createRouter({
     {
       path: '/',
       component: AppLayout,
-      redirect: '/marketing-dashboard/product-sales-performance',
       meta: { requiresAuth: true },
       children: [
+        {
+          path: 'no-permission',
+          name: 'NoPermission',
+          component: () => import('@/views/error/NoPermissionPage.vue'),
+          meta: {
+            title: '暂无访问权限',
+            parentTitle: '权限校验',
+            permissionFree: true,
+          },
+        },
         {
           path: 'marketing-dashboard/product-sales-performance',
           name: 'ProductSalesPerformance',
@@ -73,7 +83,17 @@ const router = createRouter({
           component: () => import('@/views/system-management/UserManagement.vue'),
           meta: { title: '用户管理', parentTitle: '系统管理' },
         },
+        {
+          path: 'system-management/role-management',
+          name: 'RoleManagement',
+          component: () => import('@/views/system-management/RoleManagement.vue'),
+          meta: { title: '角色管理', parentTitle: '系统管理' },
+        },
       ],
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/no-permission',
     },
   ],
 })
@@ -106,6 +126,46 @@ router.beforeEach(async (to) => {
       query: {
         redirectUrl: to.fullPath,
       },
+      replace: true,
+    }
+  }
+
+  if (to.meta.permissionFree) {
+    return true
+  }
+
+  const hasLoadedPermissions = await authStore.fetchPermissionInfo({ showError: false })
+
+  if (!hasLoadedPermissions) {
+    const sessionStillValid = await authStore.fetchUserInfo()
+
+    if (!sessionStillValid) {
+      return {
+        path: '/login',
+        query: { redirectUrl: to.fullPath },
+        replace: true,
+      }
+    }
+
+    Message.error('权限信息获取失败，已拒绝访问')
+    return {
+      name: 'NoPermission',
+      query: { from: to.fullPath },
+      replace: true,
+    }
+  }
+
+  if (to.path === '/') {
+    return authStore.firstPermittedPath
+      ? { path: authStore.firstPermittedPath, replace: true }
+      : { name: 'NoPermission', replace: true }
+  }
+
+  if (!authStore.hasPagePermission(to.path)) {
+    Message.warning('当前角色无权访问该页面')
+    return {
+      name: 'NoPermission',
+      query: { from: to.fullPath },
       replace: true,
     }
   }

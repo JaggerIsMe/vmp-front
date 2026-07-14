@@ -3,6 +3,7 @@ const regs = {
   password: /^(?=.*\d)(?=.*[a-zA-Z])[\da-zA-Z~!@#$%^&*_]{8,18}$/,
   account: /^[A-Za-z0-9]{1,10}$/,
   nickName: /^[\u4e00-\u9fa5A-Za-z0-9]{1,19}$/,
+  roleName: /^[\u4e00-\u9fa5A-Za-z0-9]{1,20}$/,
 }
 const verify = (rule, value, reg, callback) => {
   if (value !== undefined && value !== null && value !== '') {
@@ -28,5 +29,8 @@ export default {
   },
   nickName: (rule, value, callback) => {
     return verify(rule, value, regs.nickName, callback)
+  },
+  roleName: (rule, value, callback) => {
+    return verify(rule, value, regs.roleName, callback)
   },
 }
