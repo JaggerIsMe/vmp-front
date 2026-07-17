@@ -7,6 +7,10 @@ import {
   collectPermittedPaths,
   filterNavigableMenuTree,
 } from '../src/utils/MenuPermission.js'
+import {
+  getRouteBreadcrumbTitles,
+  isMenuBranch,
+} from '../src/utils/MenuPresentation.js'
 
 const expectedRoutes = [
   ['AmazonProductSalesPerformance', 'marketing-dashboard/amazon/product-sales-performance'],
@@ -75,5 +79,24 @@ test('builds and collects three-level marketing dashboard permissions', () => {
   assert.deepEqual(
     paths,
     expectedRoutes.map(([, path]) => `/${path}`),
+  )
+})
+
+test('classifies menu branches and leaves', () => {
+  assert.equal(isMenuBranch({ children: [{}] }), true)
+  assert.equal(isMenuBranch({ children: [] }), false)
+  assert.equal(isMenuBranch({}), false)
+})
+
+test('derives three-level and fallback breadcrumbs', () => {
+  assert.deepEqual(
+    getRouteBreadcrumbTitles({
+      breadcrumbTitles: ['营销驾驶舱', 'Amazon', '订单列表Amazon'],
+    }),
+    ['营销驾驶舱', 'Amazon', '订单列表Amazon'],
+  )
+  assert.deepEqual(
+    getRouteBreadcrumbTitles({ parentTitle: '系统管理', title: '用户管理' }),
+    ['系统管理', '用户管理'],
   )
 })
