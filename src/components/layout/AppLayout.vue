@@ -65,6 +65,7 @@ import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   ChatLineRound,
+  Collection,
   Connection,
   DataAnalysis,
   DataBoard,
@@ -103,6 +104,7 @@ const menuIconMap = {
   '/system-management': Setting,
   '/system-management/user-management': UserFilled,
   '/system-management/role-management': UserFilled,
+  '/system-management/dictionary-management': Collection,
 }
 
 const getMenuIcon = (menu) => menuIconMap[menu.fullPath] || menuIconMap[menu.path] || Grid

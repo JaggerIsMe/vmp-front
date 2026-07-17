@@ -89,6 +89,12 @@ const router = createRouter({
           component: () => import('@/views/system-management/RoleManagement.vue'),
           meta: { title: '角色管理', parentTitle: '系统管理' },
         },
+        {
+          path: 'system-management/dictionary-management',
+          name: 'DictionaryManagement',
+          component: () => import('@/views/system-management/DictionaryManagement.vue'),
+          meta: { title: '字典管理', parentTitle: '系统管理' },
+        },
       ],
     },
     {

@@ -1,0 +1,222 @@
+.dictionary-management-page {
+  height: 100%;
+  overflow: hidden;
+
+  .dictionary-layout {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 0;
+  }
+
+  .dictionary-father-column,
+  .dictionary-child-column {
+    display: flex;
+    min-height: 0;
+  }
+
+  .dictionary-father-panel,
+  .dictionary-child-panel {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .dictionary-panel-header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+
+    h3 {
+      margin: 0;
+      color: #111827;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    p {
+      margin: 4px 0 0;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+  }
+
+  .dictionary-father-header .el-button {
+    flex: 0 0 auto;
+    margin-left: 0;
+  }
+
+  .dictionary-father-list {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+  }
+
+  .dictionary-father-item {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    min-height: 46px;
+    padding: 6px 8px 6px 14px;
+    color: #334155;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+
+    &:hover,
+    &:focus-within {
+      background: #eff6ff;
+    }
+
+    &.is-active {
+      color: #1d4ed8;
+      background: #dbeafe;
+      font-weight: 600;
+    }
+
+    &:hover .dictionary-father-edit,
+    &:focus-within .dictionary-father-edit {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  .dictionary-father-select {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 4px 6px;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid rgba(37, 99, 235, 0.55);
+      outline-offset: 2px;
+    }
+  }
+
+  .dictionary-father-name {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .dictionary-father-edit {
+    flex: 0 0 auto;
+    margin-left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+
+    &:focus-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  .dictionary-search-row {
+    flex: 0 0 auto;
+  }
+
+  .dictionary-search-actions {
+    min-width: 0;
+  }
+
+  .dictionary-search-button-group {
+    display: flex;
+    gap: 8px;
+
+    .el-button {
+      width: 88px;
+      margin-left: 0;
+
+      &:last-child {
+        width: 144px;
+      }
+    }
+  }
+
+  .dictionary-table-scroll {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .dictionary-child-table,
+  .dictionary-child-table .el-table__inner-wrapper {
+    width: 100%;
+  }
+
+  .dictionary-pagination {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 16px;
+    overflow-x: auto;
+
+    .el-pagination {
+      min-width: max-content;
+    }
+  }
+}
+
+@media (hover: none) {
+  .dictionary-management-page .dictionary-father-edit {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: 991px) {
+  .dictionary-management-page {
+    overflow-y: auto;
+
+    .dictionary-layout {
+      flex: 0 0 auto;
+    }
+
+    .dictionary-father-column {
+      margin-bottom: 16px;
+    }
+
+    .dictionary-father-panel {
+      min-height: 280px;
+    }
+
+    .dictionary-child-panel {
+      min-height: 520px;
+    }
+
+    .dictionary-search-button-group {
+      flex-wrap: wrap;
+    }
+
+    .dictionary-pagination {
+      justify-content: flex-start;
+    }
+  }
+}

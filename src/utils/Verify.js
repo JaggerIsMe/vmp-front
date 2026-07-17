@@ -4,6 +4,8 @@ const regs = {
   account: /^[A-Za-z0-9]{1,10}$/,
   nickName: /^[\u4e00-\u9fa5A-Za-z0-9]{1,19}$/,
   roleName: /^[\u4e00-\u9fa5A-Za-z0-9]{1,20}$/,
+  dictCode: /^(?=.{1,20}$)[A-Za-z0-9]+(?:_[A-Za-z0-9]+)*$/,
+  dictName: /^(?!.*[-_ ]{2})[\u4e00-\u9fa5A-Za-z0-9 _-]{1,20}$/,
 }
 const verify = (rule, value, reg, callback) => {
   if (value !== undefined && value !== null && value !== '') {
@@ -33,4 +35,6 @@ export default {
   roleName: (rule, value, callback) => {
     return verify(rule, value, regs.roleName, callback)
   },
+  dictCode: (rule, value, callback) => verify(rule, value, regs.dictCode, callback),
+  dictName: (rule, value, callback) => verify(rule, value, regs.dictName, callback),
 }

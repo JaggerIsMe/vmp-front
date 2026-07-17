@@ -11,6 +11,7 @@ import './assets/styles/login.page.scss'
 import './assets/styles/user.info.scss'
 import './assets/styles/user.management.scss'
 import './assets/styles/role.management.scss'
+import './assets/styles/dictionary.management.scss'
 
 import Verify from './utils/Verify'
 import Message from './utils/Message'

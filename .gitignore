@@ -44,3 +44,7 @@ src/config/*
 # 忽略特定的数据库和 Postman 文件
 /vmp_database.sql
 /vmp-api.postman_collection.json
+
+# 忽略文件
+/docs/
+/tests/
