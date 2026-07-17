@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import Message from '@/utils/Message'
+import { marketingDashboardRoutes } from '@/router/marketingDashboardRoutes'
 
 const AppLayout = () => import('@/components/layout/AppLayout.vue')
 const LoginPage = () => import('@/views/login/LoginPage.vue')
@@ -29,18 +30,7 @@ const router = createRouter({
             permissionFree: true,
           },
         },
-        {
-          path: 'marketing-dashboard/product-sales-performance',
-          name: 'ProductSalesPerformance',
-          component: () => import('@/views/marketing-dashboard/ProductSalesPerformance.vue'),
-          meta: { title: '产品销售表现', parentTitle: '营销驾驶舱' },
-        },
-        {
-          path: 'marketing-dashboard/order-list',
-          name: 'OrderList',
-          component: () => import('@/views/marketing-dashboard/OrderList.vue'),
-          meta: { title: '订单列表', parentTitle: '营销驾驶舱' },
-        },
+        ...marketingDashboardRoutes,
         {
           path: 'traffic-monitor/product-traffic-monitor',
           name: 'ProductTrafficMonitor',
