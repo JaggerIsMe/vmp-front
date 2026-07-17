@@ -305,7 +305,6 @@ watch(
     await nextTick()
     formRef.value?.clearValidate()
   },
-  { flush: 'sync' },
 )
 </script>
 
