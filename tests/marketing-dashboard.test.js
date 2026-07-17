@@ -1,5 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 
 import { marketingDashboardRoutes } from '../src/router/marketingDashboardRoutes.js'
 import {
@@ -99,4 +100,65 @@ test('derives three-level and fallback breadcrumbs', () => {
     getRouteBreadcrumbTitles({ parentTitle: '系统管理', title: '用户管理' }),
     ['系统管理', '用户管理'],
   )
+})
+
+test('seeds Amazon and Shopify three-level permission nodes', () => {
+  const sql = readFileSync(
+    new URL(
+      '../database/migrations/2026-07-17-marketing-dashboard-three-level-menu.sql',
+      import.meta.url,
+    ),
+    'utf8',
+  )
+  const expectedMenuRows = [
+    "('71601606361697236041','71601606361697236040','Amazon','/amazon'",
+    "('71601606361697236042','71601606361697236040','Shopify','/shopify'",
+    "('30706583407525319196','71601606361697236041','产品销售表现Amazon','/product-sales-performance'",
+    "('30706583407525319197','71601606361697236041','Listing列表Amazon','/listing-list'",
+    "('97681727879252529955','71601606361697236041','订单列表Amazon','/order-list'",
+    "('30706583407525319198','71601606361697236042','产品销售表现Shopify','/product-sales-performance'",
+    "('30706583407525319199','71601606361697236042','Listing列表Shopify','/listing-list'",
+    "('97681727879252529956','71601606361697236042','订单列表Shopify','/order-list'",
+  ]
+
+  for (const row of expectedMenuRows) {
+    assert.ok(sql.includes(row), `missing menu seed row: ${row}`)
+  }
+})
+
+test('grants platform directories and leaves to seeded roles', () => {
+  const sql = readFileSync(
+    new URL(
+      '../database/migrations/2026-07-17-marketing-dashboard-three-level-menu.sql',
+      import.meta.url,
+    ),
+    'utf8',
+  )
+  const amazonMenuIds = [
+    '71601606361697236040',
+    '71601606361697236041',
+    '30706583407525319196',
+    '30706583407525319197',
+    '97681727879252529955',
+  ]
+  const allPlatformMenuIds = [
+    ...amazonMenuIds,
+    '71601606361697236042',
+    '30706583407525319198',
+    '30706583407525319199',
+    '97681727879252529956',
+  ]
+
+  for (const menuId of amazonMenuIds) {
+    assert.ok(
+      sql.includes(`('inituserrole','${menuId}')`),
+      `initial role is missing menu ${menuId}`,
+    )
+  }
+  for (const menuId of allPlatformMenuIds) {
+    assert.ok(
+      sql.includes(`('JvB2REMpxToXuku29ZA6','${menuId}')`),
+      `administrator role is missing menu ${menuId}`,
+    )
+  }
 })

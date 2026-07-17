@@ -29,7 +29,7 @@
 - Create `src/views/marketing-dashboard/shopify/*.vue`: three independent Shopify placeholders.
 - Modify `src/router/index.js`: consumes the route module and removes old two-level records.
 - Modify `src/components/layout/AppLayout.vue`: consumes recursive menu and breadcrumb helpers.
-- Modify `vmp_database.sql`: seeds Amazon/Shopify directories, six leaves, and role grants.
+- Create `database/migrations/2026-07-17-marketing-dashboard-three-level-menu.sql`: applies Amazon/Shopify directories, six leaves, and role grants without tracking the ignored local database dump.
 - Create `tests/marketing-dashboard.test.js`: verifies routes, permission path construction, menu presentation, and seed SQL.
 - Delete `src/views/marketing-dashboard/ProductSalesPerformance.vue` and `src/views/marketing-dashboard/OrderList.vue`: obsolete two-level placeholders.
 
@@ -359,7 +359,7 @@ git commit -m "feat: render recursive permission menus"
 
 **Files:**
 - Modify: `tests/marketing-dashboard.test.js`
-- Modify: `vmp_database.sql`
+- Create: `database/migrations/2026-07-17-marketing-dashboard-three-level-menu.sql`
 
 **Interfaces:**
 - Consumes: `sys_menu_info(menu_id, pid, title, path, ...)` and `sys_roles_menus(role_id, menu_id)`.
@@ -367,7 +367,7 @@ git commit -m "feat: render recursive permission menus"
 
 - [ ] **Step 1: Add a failing SQL structure test**
 
-Read `vmp_database.sql` using `readFileSync(new URL('../vmp_database.sql', import.meta.url), 'utf8')`. Assert exact row prefixes for these parent relationships:
+Read `database/migrations/2026-07-17-marketing-dashboard-three-level-menu.sql` using `readFileSync`. The local `vmp_database.sql` is explicitly ignored and must not become a tracked test dependency. Assert exact row prefixes for these parent relationships:
 
 ```text
 71601606361697236041 → 71601606361697236040 → Amazon → /amazon
@@ -386,7 +386,7 @@ Also assert that all eight platform/leaf menu IDs occur in the administrator rol
 
 Run: `node --test tests/marketing-dashboard.test.js`
 
-Expected: FAIL because `vmp_database.sql` does not contain the Amazon directory row.
+Expected: FAIL with `ENOENT` because the migration file does not exist.
 
 - [ ] **Step 3: Update sys_menu_info seed rows**
 
@@ -403,7 +403,7 @@ Run: `node --test tests/marketing-dashboard.test.js`
 Expected: all marketing-dashboard tests PASS.
 
 ```bash
-git add tests/marketing-dashboard.test.js vmp_database.sql
+git add tests/marketing-dashboard.test.js database/migrations/2026-07-17-marketing-dashboard-three-level-menu.sql
 git commit -m "feat: seed platform marketing permissions"
 ```
 
