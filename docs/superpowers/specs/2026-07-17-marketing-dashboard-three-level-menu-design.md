@@ -96,8 +96,6 @@ meta: {
 
 现有 `MenuPermission.js` 已根据 `menuId`、`pid` 递归构建权限树，并递归拼接 `fullPath`、收集叶子路径，因此不修改核心算法。
 
-权限数据通过 `database/migrations/2026-07-17-marketing-dashboard-three-level-menu.sql` 增量交付。仓库明确忽略本地 `vmp_database.sql` 转储，因此测试和版本提交不依赖整份环境数据库文件。
-
 数据库菜单关系调整为：
 
 - “营销驾驶舱”仍是 `pid = VMP` 的一级目录。
