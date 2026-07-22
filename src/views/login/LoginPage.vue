@@ -103,6 +103,7 @@ import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref } from 'v
 import { useRoute, useRouter } from 'vue-router'
 import { Loading, Lock, Refresh, User } from '@element-plus/icons-vue'
 import Message from '@/utils/Message'
+import { claimDingTalkAuthCode } from '@/utils/DingTalkLoginGuard'
 import { useAuthStore } from '@/stores/auth'
 import dingTalkConfig from '@/config/ding-talk.config'
 
@@ -227,13 +228,18 @@ const clearDingTalkFrame = () => {
 }
 
 const handleDingTalkLoginSuccess = async (authCode) => {
-  if (!authCode || dingTalkLoggingIn.value) {
+  if (dingTalkLoggingIn.value) {
+    return
+  }
+
+  const normalizedAuthCode = claimDingTalkAuthCode(authCode)
+  if (!normalizedAuthCode) {
     return
   }
 
   dingTalkLoggingIn.value = true
   dingTalkError.value = ''
-  const isLogin = await authStore.loginByDingTalk(authCode).finally(() => {
+  const isLogin = await authStore.loginByDingTalk(normalizedAuthCode).finally(() => {
     dingTalkLoggingIn.value = false
   })
 

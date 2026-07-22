@@ -8,6 +8,8 @@ import {
   normalizeMenuPath,
 } from '@/utils/MenuPermission'
 
+const dingTalkLoginTasks = new Map()
+
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     userInfo: null,
@@ -85,20 +87,32 @@ export const useAuthStore = defineStore('auth', {
 
       return this.fetchLoginContext()
     },
-    async loginByDingTalk(authCode) {
-      const response = await request({
-        url: '/dtLogin/auth/code',
-        params: {
-          authCode,
-        },
-      })
+    loginByDingTalk(authCode) {
+      const normalizedAuthCode = String(authCode || '').trim()
+      const existingLoginTask = dingTalkLoginTasks.get(normalizedAuthCode)
 
-      if (!response) {
-        this.clearLogin()
-        return false
+      if (existingLoginTask) {
+        return existingLoginTask
       }
 
-      return this.fetchLoginContext()
+      const loginTask = (async () => {
+        const response = await request({
+          url: '/dtLogin/auth/code',
+          params: {
+            authCode: normalizedAuthCode,
+          },
+        })
+
+        if (!response) {
+          this.clearLogin()
+          return false
+        }
+
+        return this.fetchLoginContext()
+      })()
+
+      dingTalkLoginTasks.set(normalizedAuthCode, loginTask)
+      return loginTask
     },
     async fetchLoginContext() {
       const isLogin = await this.fetchUserInfo()
