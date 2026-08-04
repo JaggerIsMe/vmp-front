@@ -1,0 +1,78 @@
+.shopify-order-page {
+  height: 100%;
+  overflow: hidden;
+}
+
+.shopify-order-panel {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.shopify-order-search-row {
+  align-items: flex-start;
+}
+
+.shopify-order-search-actions {
+  display: flex;
+  align-items: center;
+}
+
+.shopify-order-search-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.shopify-order-search-button-group .el-button {
+  flex: 0 0 88px;
+  width: 88px;
+  margin-left: 0;
+}
+
+.shopify-order-selected-product {
+  max-width: min(100%, 320px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shopify-order-table-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.shopify-order-table {
+  width: 100%;
+}
+
+.shopify-order-pagination {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  width: 100%;
+  min-height: 40px;
+  margin-top: 16px;
+  padding-bottom: 2px;
+  overflow: auto hidden;
+}
+
+.shopify-order-pagination .el-pagination {
+  flex: 0 0 auto;
+  min-width: max-content;
+}
+
+@media (max-width: 640px) {
+  .shopify-order-search-button-group {
+    flex-wrap: wrap;
+  }
+
+  .shopify-order-pagination {
+    justify-content: flex-start;
+  }
+}

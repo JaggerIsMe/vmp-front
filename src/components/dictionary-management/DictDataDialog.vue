@@ -19,7 +19,7 @@
       <el-form-item v-if="!isEdit" label="字典代码" prop="dictCode">
         <el-input
           v-model.trim="formData.dictCode"
-          maxlength="20"
+          maxlength="64"
           show-word-limit
           clearable
           placeholder="请输入字典代码"
@@ -30,7 +30,7 @@
       <el-form-item label="字典名称" prop="dictName">
         <el-input
           v-model.trim="formData.dictName"
-          maxlength="20"
+          maxlength="64"
           show-word-limit
           clearable
           :placeholder="dictNamePlaceholder"
@@ -157,8 +157,8 @@ const hasChanged = computed(() => {
   )
 })
 const canSubmit = computed(() => isComplete.value && hasChanged.value && !submitting.value)
-const dictCodeFormatMessage = '字典代码只能包含数字、英文字母和“_”，下划线不能位于首尾或连续出现，且长度不超过 20 位'
-const dictNameFormatMessage = '字典名称只能包含中文、数字、英文字母、“-”、“_”和半角空格，特殊字符不能连续，且长度不超过 20 位'
+const dictCodeFormatMessage = '字典代码只能包含数字、英文字母和“_”，下划线不能位于首尾或连续出现，且长度不超过 64 位'
+const dictNameFormatMessage = '字典名称只能包含中文、数字、英文字母、“-”、“_”和半角空格，特殊字符不能连续，且长度不超过 64 位'
 
 const validateDictCode = (rule, value, callback) => {
   const dictCode = String(value || '').trim()

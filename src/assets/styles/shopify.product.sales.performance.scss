@@ -1,0 +1,187 @@
+.shopify-sales-performance-page {
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+}
+
+.shopify-sales-performance-filter-panel {
+  flex: 0 0 auto;
+}
+
+.shopify-sales-performance-search-row {
+  align-items: flex-start;
+  margin-bottom: 0;
+}
+
+.shopify-sales-performance-search-row .el-date-editor,
+.shopify-sales-performance-search-row .el-select {
+  width: 100%;
+}
+
+.shopify-sales-performance-search-actions,
+.shopify-sales-performance-search-button-group {
+  display: flex;
+  align-items: center;
+}
+
+.shopify-sales-performance-search-button-group {
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+}
+
+.shopify-sales-performance-search-button-group .el-button {
+  flex: 0 0 96px;
+  width: 96px;
+  margin-left: 0;
+}
+
+.shopify-sales-performance-selected-product {
+  max-width: min(100%, 360px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shopify-sales-performance-chart-panel {
+  display: flex;
+  flex: 1 0 480px;
+  min-height: 480px;
+  flex-direction: column;
+}
+
+.shopify-sales-performance-chart-header {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.shopify-sales-performance-chart-header h2 {
+  margin: 4px 0 0;
+  color: #111827;
+  font-size: 20px;
+}
+
+.shopify-sales-performance-chart-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.shopify-sales-performance-chart-controls > span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.shopify-sales-performance-content {
+  display: grid;
+  flex: 1 1 auto;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 260px);
+  gap: 16px;
+  min-height: 0;
+}
+
+.shopify-daily-performance-chart-shell,
+.shopify-daily-performance-chart {
+  width: 100%;
+  min-height: 400px;
+}
+
+.shopify-daily-performance-chart-shell {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.shopify-daily-performance-chart-shell .el-empty {
+  width: 100%;
+}
+
+.shopify-sales-summary-cards {
+  display: grid;
+  min-height: 400px;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.shopify-sales-summary-card {
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+  padding: 16px;
+  border: 1px solid #dbe4f0;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #1e293b;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.shopify-sales-summary-card span,
+.shopify-sales-summary-card strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shopify-sales-summary-card span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.shopify-sales-summary-card strong {
+  color: inherit;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.shopify-sales-summary-card[data-kind='amount'] {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.shopify-sales-summary-card[data-kind='unit'] {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+@media (max-width: 1024px) {
+  .shopify-sales-performance-content {
+    grid-template-columns: 1fr;
+  }
+
+  .shopify-sales-summary-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .shopify-sales-performance-chart-header {
+    flex-direction: column;
+  }
+
+  .shopify-sales-performance-chart-controls {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .shopify-sales-performance-chart-panel {
+    min-height: 420px;
+  }
+
+  .shopify-daily-performance-chart-shell,
+  .shopify-daily-performance-chart {
+    min-height: 340px;
+  }
+
+  .shopify-sales-summary-card strong {
+    font-size: 22px;
+  }
+}
