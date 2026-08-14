@@ -1,0 +1,17 @@
+.release-skill-version-dialog {
+  display: flex;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 8vh);
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.release-skill-version-dialog :deep(.el-dialog__body) {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.release-skill-version-dialog :deep(.el-dialog__header),
+.release-skill-version-dialog :deep(.el-dialog__footer) {
+  flex: 0 0 auto;
+}

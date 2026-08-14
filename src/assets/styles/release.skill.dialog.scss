@@ -1,0 +1,20 @@
+.release-skill-dialog {
+  display: flex;
+  max-height: calc(100dvh - 8vh);
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.release-skill-dialog :deep(.el-dialog__body) {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.release-skill-dialog :deep(.el-dialog__header),
+.release-skill-dialog :deep(.el-dialog__footer) {
+  flex: 0 0 auto;
+}
+
+.el-select {
+  width: 100%;
+}

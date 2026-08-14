@@ -1,0 +1,111 @@
+:global(.skill-version-dialog-overlay .el-overlay-dialog) {
+  box-sizing: border-box;
+  padding: 16px;
+  overflow: hidden;
+}
+
+:global(.skill-version-dialog) {
+  display: flex;
+  max-width: calc(100vw - 32px);
+  height: min(680px, calc(100dvh - 32px));
+  max-height: calc(100dvh - 32px);
+  flex-direction: column;
+  margin: auto;
+  overflow: hidden;
+}
+
+:global(.skill-version-dialog .el-dialog__body) {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+:global(.skill-version-dialog .el-dialog__header),
+:global(.skill-version-dialog .el-dialog__footer) {
+  flex: 0 0 auto;
+}
+
+.skill-version-content {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.skill-version-toolbar {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.skill-version-table-scroll {
+  flex: 1 1 0;
+  height: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.skill-version-table {
+  width: 100%;
+}
+
+.skill-version-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.skill-version-actions .el-button {
+  width: 140px;
+  margin-left: 0;
+}
+
+.skill-version-pagination {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  min-height: 40px;
+  margin-top: 16px;
+  overflow: auto hidden;
+}
+
+.skill-version-pagination .el-pagination {
+  flex: 0 0 auto;
+  min-width: max-content;
+}
+
+.operator-name {
+  color: #2563eb;
+  cursor: help;
+  border-bottom: 1px dashed #93c5fd;
+}
+
+.operator-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.operator-detail__content {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+  color: #475569;
+  font-size: 13px;
+}
+
+.operator-detail__content strong {
+  color: #111827;
+  font-size: 15px;
+}
+
+@media (max-width: 640px) {
+  .skill-version-pagination {
+    justify-content: flex-start;
+  }
+}

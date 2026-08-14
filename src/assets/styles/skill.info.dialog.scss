@@ -1,0 +1,19 @@
+.skill-info-dialog {
+  display: flex;
+  max-height: calc(100dvh - 8vh);
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.skill-info-dialog :deep(.el-dialog__body) {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.skill-info-dialog :deep(.el-dialog__header),
+.skill-info-dialog :deep(.el-dialog__footer) {
+  flex: 0 0 auto;
+}
+
+.el-select { width: 100%; }
+.el-radio-group { gap: 4px 14px; }

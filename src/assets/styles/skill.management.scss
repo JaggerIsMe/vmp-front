@@ -1,0 +1,17 @@
+.skill-management-page { height: 100%; overflow: hidden; }
+.skill-management-panel { display: flex; flex: 1 1 auto; min-width: 0; min-height: 0; flex-direction: column; overflow: hidden; }
+.skill-search-row { align-items: flex-start; }
+.skill-search-actions { display: flex; align-items: center; }
+.skill-search-button-group { display: flex; flex-wrap: nowrap; gap: 12px; width: 100%; }
+.skill-search-button-group .el-button { min-width: 88px; margin-left: 0; }
+.skill-table-scroll { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+.skill-table { width: 100%; }
+.skill-table-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.skill-table-actions .el-button { width: 104px; margin-left: 0; }
+.operator-name { color: #2563eb; cursor: help; border-bottom: 1px dashed #93c5fd; }
+.skill-pagination { display: flex; flex: 0 0 auto; justify-content: flex-end; min-height: 40px; margin-top: 16px; overflow: auto hidden; }
+.skill-pagination .el-pagination { flex: 0 0 auto; min-width: max-content; }
+.operator-detail { display: flex; align-items: flex-start; gap: 14px; }
+.operator-detail__content { display: flex; min-width: 0; flex-direction: column; gap: 5px; color: #475569; font-size: 13px; }
+.operator-detail__content strong { color: #111827; font-size: 15px; }
+@media (max-width: 640px) { .skill-pagination { justify-content: flex-start; } }

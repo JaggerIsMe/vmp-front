@@ -68,6 +68,12 @@ const router = createRouter({
           meta: { title: 'VOC分析', parentTitle: 'VOC分析中心' },
         },
         {
+          path: 'agent-workbench/skill-management',
+          name: 'SkillManagement',
+          component: () => import('@/views/agent-workbench/SkillManagement.vue'),
+          meta: { title: 'Skill管理', parentTitle: 'Agent工作台' },
+        },
+        {
           path: 'system-management/user-management',
           name: 'UserManagement',
           component: () => import('@/views/system-management/UserManagement.vue'),

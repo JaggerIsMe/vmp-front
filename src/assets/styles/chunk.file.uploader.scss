@@ -1,0 +1,73 @@
+.chunk-file-uploader,
+.chunk-file-uploader :deep(.el-upload),
+.chunk-file-uploader :deep(.el-upload-dragger) {
+  width: 100%;
+}
+
+.chunk-file-uploader__icon {
+  margin-bottom: 10px;
+  color: #94a3b8;
+  font-size: 42px;
+}
+
+.chunk-file-task {
+  padding: 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.chunk-file-task__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.chunk-file-task__identity {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.chunk-file-task__identity > .el-icon {
+  flex: 0 0 auto;
+  color: #2563eb;
+  font-size: 28px;
+}
+
+.chunk-file-task__identity > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.chunk-file-task__identity strong {
+  overflow: hidden;
+  color: #1f2937;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chunk-file-task__identity span,
+.chunk-file-task__status {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.chunk-file-task__status {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.chunk-file-task__status small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
