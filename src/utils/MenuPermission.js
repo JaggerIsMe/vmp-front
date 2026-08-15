@@ -30,20 +30,58 @@ const joinMenuPath = (parentPath, childPath) => {
   return normalizeMenuPath(`${normalizedParentPath}/${normalizedChildPath.slice(1)}`)
 }
 
-const getCreateTimeValue = (createTime) => {
-  if (!createTime) {
+const getOrderNumValue = (orderNum) => {
+  if (orderNum === '' || orderNum === null || orderNum === undefined) {
     return Number.MAX_SAFE_INTEGER
   }
 
-  const timestamp = new Date(String(createTime).replace(' ', 'T')).getTime()
-  return Number.isNaN(timestamp) ? Number.MAX_SAFE_INTEGER : timestamp
+  const value = Number(orderNum)
+  return Number.isFinite(value) ? value : Number.MAX_SAFE_INTEGER
 }
 
 const sortMenuNodes = (nodes) => {
   return nodes.sort((a, b) => {
-    return getCreateTimeValue(a.createTime) - getCreateTimeValue(b.createTime) ||
+    return getOrderNumValue(a.orderNum) - getOrderNumValue(b.orderNum) ||
       a.sourceIndex - b.sourceIndex
   })
+}
+
+export const normalizeMenuDropPosition = (position) => {
+  if (position === 'prev') {
+    return 'before'
+  }
+  if (position === 'next') {
+    return 'after'
+  }
+  return position
+}
+
+export const canDropMenu = (menu, targetMenu, position) => {
+  const normalizedPosition = normalizeMenuDropPosition(position)
+  if (normalizedPosition !== 'before' && normalizedPosition !== 'after') {
+    return false
+  }
+
+  const menuId = String(menu?.menuId || '')
+  const targetMenuId = String(targetMenu?.menuId || '')
+  return Boolean(
+    menuId &&
+    targetMenuId &&
+    menuId !== targetMenuId &&
+    String(menu?.pid || '') === String(targetMenu?.pid || ''),
+  )
+}
+
+export const buildMenuSortParams = (menu, targetMenu, position) => {
+  if (!canDropMenu(menu, targetMenu, position)) {
+    return null
+  }
+
+  return {
+    menuId: String(menu.menuId),
+    targetMenuId: String(targetMenu.menuId),
+    position: normalizeMenuDropPosition(position),
+  }
 }
 
 export const buildPermissionMenuTree = (menus) => {

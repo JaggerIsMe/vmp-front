@@ -51,11 +51,14 @@
             <el-option label="停用" :value="0" />
           </el-select>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" class="role-search-actions">
+        <el-col :xs="24" :sm="12" :md="12" :lg="11" class="role-search-actions">
           <div class="role-search-button-group">
             <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
             <el-button :icon="RefreshLeft" @click="handleReset">重置</el-button>
             <el-button type="success" :icon="Plus" @click="handleAddRole">新增角色</el-button>
+            <el-button type="warning" :icon="Setting" @click="handleManageMenus">
+              菜单页面管理
+            </el-button>
           </div>
         </el-col>
       </el-row>
@@ -147,12 +150,14 @@
       :role="permissionRole"
       @saved="handlePermissionSaved"
     />
+    <MenuManagementDrawer v-model="menuManagementDrawerVisible" />
   </section>
 </template>
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
-import { Edit, Key, Plus, RefreshLeft, Search } from '@element-plus/icons-vue'
+import { Edit, Key, Plus, RefreshLeft, Search, Setting } from '@element-plus/icons-vue'
+import MenuManagementDrawer from '@/components/role-management/MenuManagementDrawer.vue'
 import RoleInfoDialog from '@/components/role-management/RoleInfoDialog.vue'
 import RolePermissionDrawer from '@/components/role-management/RolePermissionDrawer.vue'
 import Request from '@/utils/Request'
@@ -187,6 +192,7 @@ const dialogVisible = ref(false)
 const editingRole = ref(null)
 const permissionDrawerVisible = ref(false)
 const permissionRole = ref(null)
+const menuManagementDrawerVisible = ref(false)
 const roleListUrl = '/admin/loadRoleList'
 
 const hasSelectValue = (value) => value !== '' && value !== null && value !== undefined
@@ -329,6 +335,10 @@ const handleRoleSaved = () => {
 const handleAssignPermission = (role) => {
   permissionRole.value = { ...role }
   permissionDrawerVisible.value = true
+}
+
+const handleManageMenus = () => {
+  menuManagementDrawerVisible.value = true
 }
 
 const handlePermissionSaved = () => {

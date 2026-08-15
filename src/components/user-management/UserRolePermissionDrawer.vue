@@ -70,6 +70,7 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
+import { buildPermissionMenuTree } from '@/utils/MenuPermission'
 import Request from '@/utils/Request'
 
 const props = defineProps({
@@ -120,46 +121,7 @@ const hasRoleChanged = computed(() => {
   return Boolean(selectedRoleId.value) && selectedRoleId.value !== initialRoleId.value && !loading.value
 })
 
-const getCreateTimeValue = (createTime) => {
-  if (!createTime) {
-    return Number.MAX_SAFE_INTEGER
-  }
-
-  const time = new Date(String(createTime).replace(' ', 'T')).getTime()
-  return Number.isNaN(time) ? Number.MAX_SAFE_INTEGER : time
-}
-
-const menuTree = computed(() => {
-  const nodeMap = new Map(
-    permissionMenus.value.map((menu, sourceIndex) => [
-      menu.menuId,
-      { ...menu, sourceIndex, children: [] },
-    ]),
-  )
-  const roots = []
-
-  nodeMap.forEach((node) => {
-    const parent = nodeMap.get(node.pid)
-    if (node.pid === 'VMP' || !parent) {
-      roots.push(node)
-    } else {
-      parent.children.push(node)
-    }
-  })
-
-  const sortTree = (nodes) => {
-    const sorted = [...nodes].sort((a, b) => {
-      return getCreateTimeValue(a.createTime) - getCreateTimeValue(b.createTime) ||
-        a.sourceIndex - b.sourceIndex
-    })
-    sorted.forEach((node) => {
-      node.children = sortTree(node.children)
-    })
-    return sorted
-  }
-
-  return sortTree(roots)
-})
+const menuTree = computed(() => buildPermissionMenuTree(permissionMenus.value))
 
 const formatRoleLevel = (level) => {
   return roleLevelOptions.find((item) => item.value === Number(level))?.label || '-'

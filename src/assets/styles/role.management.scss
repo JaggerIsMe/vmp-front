@@ -37,9 +37,14 @@
   margin-left: 0;
 }
 
-.role-search-button-group .el-button:last-child {
+.role-search-button-group .el-button:nth-child(3) {
   flex-basis: 108px;
   width: 108px;
+}
+
+.role-search-button-group .el-button:last-child {
+  flex-basis: 132px;
+  width: 132px;
 }
 
 .role-table,
@@ -119,6 +124,12 @@
   border-top: 1px solid #e5e7eb;
 }
 
+.menu-management-drawer .el-drawer__body {
+  min-height: 0;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
 .permission-editor {
   display: flex;
   height: 100%;
@@ -126,12 +137,33 @@
   flex-direction: column;
 }
 
-.permission-editor__toolbar {
+.menu-management-editor {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.menu-management-editor__toolbar {
   display: flex;
   flex: 0 0 auto;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   padding: 4px 0 16px;
   border-bottom: 1px solid #e5e7eb;
+}
+
+.menu-management-editor__toolbar > span {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.menu-management-tree-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 12px 0 20px;
+  overflow-y: auto;
 }
 
 .permission-tree-scroll {
@@ -175,6 +207,63 @@
   white-space: nowrap;
 }
 
+.menu-management-tree .el-tree-node__content {
+  height: 48px;
+  padding-right: 8px;
+  border-radius: 6px;
+}
+
+.menu-management-tree .el-tree-node__content:hover {
+  background: #f8fafc;
+}
+
+.menu-management-tree .el-tree-node__expand-icon {
+  box-sizing: border-box;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  padding: 14px;
+}
+
+.menu-management-tree-node {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 100%;
+  cursor: grab;
+}
+
+.menu-management-tree-node:active {
+  cursor: grabbing;
+}
+
+.menu-management-tree-node__info {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menu-management-tree-node__info span,
+.menu-management-tree-node__info small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-management-tree-node__info span {
+  color: #1f2937;
+  font-size: 14px;
+}
+
+.menu-management-tree-node__info small {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
 .permission-tree-node__info span {
   color: #1f2937;
   font-size: 14px;
@@ -185,14 +274,14 @@
   font-size: 12px;
 }
 
-.permission-tree-node__edit {
+.menu-management-tree-node__edit {
   flex: 0 0 auto;
   visibility: hidden;
   opacity: 0;
 }
 
-.permission-tree-node:hover .permission-tree-node__edit,
-.permission-tree-node__edit:focus-visible {
+.menu-management-tree-node:hover .menu-management-tree-node__edit,
+.menu-management-tree-node__edit:focus-visible {
   visibility: visible;
   opacity: 1;
 }

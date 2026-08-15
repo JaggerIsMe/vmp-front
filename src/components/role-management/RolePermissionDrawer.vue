@@ -7,10 +7,6 @@
     class="role-permission-drawer"
   >
     <div v-loading="loading" class="permission-editor">
-      <div class="permission-editor__toolbar">
-        <el-button type="primary" :icon="Plus" @click="handleAddMenu">新增菜单页面</el-button>
-      </div>
-
       <div class="permission-tree-scroll">
         <el-tree
           ref="treeRef"
@@ -31,14 +27,6 @@
                 <span>{{ data.title }}</span>
                 <small>{{ data.path }}</small>
               </div>
-              <el-button
-                class="permission-tree-node__edit"
-                text
-                circle
-                :icon="Edit"
-                title="修改菜单页面"
-                @click.stop="handleEditMenu(data)"
-              />
             </div>
           </template>
         </el-tree>
@@ -59,20 +47,12 @@
       </div>
     </template>
   </el-drawer>
-
-  <MenuInfoDialog
-    v-model="menuDialogVisible"
-    :menu="editingMenu"
-    :menus="menuOptions"
-    @saved="handleMenuSaved"
-  />
 </template>
 
 <script setup>
 import { computed, nextTick, ref, watch } from 'vue'
-import { Edit, Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-import MenuInfoDialog from '@/components/role-management/MenuInfoDialog.vue'
+import { buildPermissionMenuTree } from '@/utils/MenuPermission'
 import Request from '@/utils/Request'
 
 const props = defineProps({
@@ -95,70 +75,13 @@ const saving = ref(false)
 const allMenus = ref([])
 const initialPermissionKey = ref('[]')
 const currentPermissionKey = ref('[]')
-const menuDialogVisible = ref(false)
-const editingMenu = ref(null)
 
 const drawerVisible = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:modelValue', value),
 })
 
-const getCreateTimeValue = (createTime) => {
-  if (!createTime) {
-    return Number.MAX_SAFE_INTEGER
-  }
-
-  const time = new Date(String(createTime).replace(' ', 'T')).getTime()
-  return Number.isNaN(time) ? Number.MAX_SAFE_INTEGER : time
-}
-
-const sortMenus = (menus) => {
-  return [...menus].sort((a, b) => {
-    return getCreateTimeValue(a.createTime) - getCreateTimeValue(b.createTime) ||
-      a.sourceIndex - b.sourceIndex
-  })
-}
-
-const menuTree = computed(() => {
-  const nodeMap = new Map(
-    allMenus.value.map((menu, sourceIndex) => [
-      menu.menuId,
-      { ...menu, sourceIndex, children: [] },
-    ]),
-  )
-  const roots = []
-
-  nodeMap.forEach((node) => {
-    const parent = nodeMap.get(node.pid)
-    if (node.pid === 'VMP' || !parent) {
-      roots.push(node)
-    } else {
-      parent.children.push(node)
-    }
-  })
-
-  const sortTree = (nodes) => {
-    const sorted = sortMenus(nodes)
-    sorted.forEach((node) => {
-      node.children = sortTree(node.children)
-    })
-    return sorted
-  }
-
-  return sortTree(roots)
-})
-
-const menuOptions = computed(() => {
-  const result = []
-  const walk = (nodes, depth = 0) => {
-    nodes.forEach((node) => {
-      result.push({ ...node, depth, children: undefined })
-      walk(node.children || [], depth + 1)
-    })
-  }
-  walk(menuTree.value)
-  return result
-})
+const menuTree = computed(() => buildPermissionMenuTree(allMenus.value))
 
 const hasPermissionChanged = computed(() => {
   return !loading.value && currentPermissionKey.value !== initialPermissionKey.value
@@ -222,20 +145,6 @@ const handleTreeCheck = () => {
   syncCurrentPermissionKey()
 }
 
-const handleAddMenu = () => {
-  editingMenu.value = null
-  menuDialogVisible.value = true
-}
-
-const handleEditMenu = (menu) => {
-  editingMenu.value = { ...menu, children: undefined }
-  menuDialogVisible.value = true
-}
-
-const handleMenuSaved = () => {
-  loadPermissionData()
-}
-
 const handleSavePermissions = async () => {
   if (!hasPermissionChanged.value || saving.value || !props.role?.roleId) {
     return
@@ -273,8 +182,6 @@ watch(drawerVisible, (visible) => {
   allMenus.value = []
   initialPermissionKey.value = '[]'
   currentPermissionKey.value = '[]'
-  editingMenu.value = null
-  menuDialogVisible.value = false
 })
 </script>
 
