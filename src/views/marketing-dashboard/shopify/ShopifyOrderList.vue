@@ -162,7 +162,7 @@
             end-placeholder="创建结束日期"
             value-format="YYYY-MM-DD"
             :shortcuts="dateShortcuts"
-            :disabled-date="disableShopifyFutureDate"
+            :disabled-date="disableFutureDate"
             clearable
           />
         </el-col>
@@ -328,10 +328,12 @@ import ShopifyOrderItemList from '@/components/shopify-order/ShopifyOrderItemLis
 import ShopifyOrderProductSelectorDialog from '@/components/shopify-order/ShopifyOrderProductSelectorDialog.vue'
 import Request from '@/utils/Request'
 import {
+  createDateRangeShortcuts,
+  createDefaultDateRange,
+  disableFutureDate,
+} from '@/utils/DateRange'
+import {
   buildShopifyOrderListParams,
-  createShopifyOrderDefaultDateRange,
-  createShopifyOrderDateShortcuts,
-  disableShopifyFutureDate,
   findShopifyDictionaryName,
   formatShopifyOrderAmount,
   formatShopifyOrderCell,
@@ -362,7 +364,7 @@ const queryForm = reactive({
   orderName: '',
   customerEmailFuzzy: '',
   discountCodeFuzzy: '',
-  createdAtRange: createShopifyOrderDefaultDateRange(),
+  createdAtRange: createDefaultDateRange(),
 })
 const pagination = reactive({
   pageNo: 1,
@@ -383,7 +385,7 @@ const selectedProduct = ref(null)
 const selectedProductSummary = computed(() =>
   formatShopifyOrderProductSelection(selectedProduct.value),
 )
-const dateShortcuts = createShopifyOrderDateShortcuts()
+const dateShortcuts = createDateRangeShortcuts()
 
 let listRequestId = 0
 let destroyed = false
@@ -464,7 +466,7 @@ const handleReset = () => {
   queryForm.orderName = ''
   queryForm.customerEmailFuzzy = ''
   queryForm.discountCodeFuzzy = ''
-  queryForm.createdAtRange = createShopifyOrderDefaultDateRange()
+  queryForm.createdAtRange = createDefaultDateRange()
   selectedProduct.value = null
   productSelectorVisible.value = false
   pagination.pageNo = 1

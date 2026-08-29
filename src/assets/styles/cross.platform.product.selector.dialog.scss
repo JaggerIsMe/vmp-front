@@ -1,0 +1,120 @@
+.cross-platform-product-selector-dialog .el-dialog__body {
+  padding-bottom: 12px;
+}
+
+.cross-platform-product-selector {
+  display: flex;
+  height: min(620px, 68vh);
+  min-height: 420px;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cross-platform-product-selector__search-row {
+  flex: 0 0 auto;
+  margin-bottom: 4px;
+}
+
+.cross-platform-product-selector__search-row .el-col {
+  margin-bottom: 12px;
+}
+
+.cross-platform-product-selector__search-row .el-input,
+.cross-platform-product-selector__search-row .el-select {
+  width: 100%;
+}
+
+.cross-platform-product-selector__search-row .cross-platform-product-selector__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cross-platform-product-selector__actions .el-button {
+  flex: 1 1 0;
+  min-width: 0;
+  margin-left: 0;
+}
+
+.cross-platform-product-selector__summary {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  color: #475569;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+}
+
+.cross-platform-product-selector__table-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.cross-platform-product-selector__table {
+  width: 100%;
+}
+
+.cross-platform-product-selector__image,
+.cross-platform-product-selector__image-fallback {
+  width: 64px;
+  height: 64px;
+  border-radius: 6px;
+}
+
+.cross-platform-product-selector__image {
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #e2e8f0;
+}
+
+.cross-platform-product-selector__image-fallback {
+  display: grid;
+  margin: 0 auto;
+  place-items: center;
+  color: #94a3b8;
+  font-size: 11px;
+  line-height: 1.3;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+}
+
+.cross-platform-product-selector__pagination {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  min-height: 40px;
+  margin-top: 12px;
+  overflow: auto hidden;
+}
+
+.cross-platform-product-selector__pagination .el-pagination {
+  flex: 0 0 auto;
+  min-width: max-content;
+}
+
+.cross-platform-product-selector__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cross-platform-product-selector__footer .el-button {
+  min-width: 88px;
+  margin-left: 0;
+}
+
+@media (max-width: 640px) {
+  .cross-platform-product-selector {
+    min-height: 360px;
+  }
+
+  .cross-platform-product-selector__pagination {
+    justify-content: flex-start;
+  }
+}

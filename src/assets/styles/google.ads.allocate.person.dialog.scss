@@ -1,0 +1,28 @@
+.google-ads-allocate-person-dialog__summary {
+  padding: 10px 12px;
+  margin-bottom: 18px;
+  color: #475569;
+  font-size: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+}
+
+.google-ads-allocate-person-dialog__summary strong {
+  color: #2563eb;
+}
+
+.google-ads-allocate-person-form .el-select {
+  width: 100%;
+}
+
+.google-ads-allocate-person-dialog__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.google-ads-allocate-person-dialog__footer .el-button {
+  min-width: 88px;
+  margin-left: 0;
+}

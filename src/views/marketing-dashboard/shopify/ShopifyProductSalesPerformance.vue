@@ -94,7 +94,7 @@
             type="daterange"
             value-format="YYYY-MM-DD"
             :shortcuts="dateShortcuts"
-            :disabled-date="disableShopifyFutureDate"
+            :disabled-date="disableFutureDate"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
@@ -180,9 +180,8 @@ import ShopifySalesSummaryCards from '@/components/shopify-dashboard/ShopifySale
 import ShopifyOrderProductSelectorDialog from '@/components/shopify-order/ShopifyOrderProductSelectorDialog.vue'
 import Message from '@/utils/Message'
 import Request from '@/utils/Request'
+import { createDateRangeShortcuts, disableFutureDate } from '@/utils/DateRange'
 import {
-  createShopifyOrderDateShortcuts,
-  disableShopifyFutureDate,
   formatShopifyOrderProductSelection,
   getShopifyStoreOptionValue,
   normalizeShopifyOrderProductSelection,
@@ -236,7 +235,7 @@ const selectedDateSummary = computed(() =>
     ? `${queryForm.createdAtRange[0]} 至 ${queryForm.createdAtRange[1]}`
     : '未选择日期',
 )
-const dateShortcuts = createShopifyOrderDateShortcuts()
+const dateShortcuts = createDateRangeShortcuts()
 
 let performanceRequestId = 0
 let destroyed = false
