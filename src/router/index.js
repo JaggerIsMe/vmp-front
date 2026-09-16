@@ -38,6 +38,12 @@ const router = createRouter({
           meta: { title: 'GoogleAds', parentTitle: '广告中心' },
         },
         {
+          path: 'advertising-center/meta-ads',
+          name: 'MetaAds',
+          component: () => import('@/views/advertising-center/MetaAds.vue'),
+          meta: { title: 'MetaAds', parentTitle: '广告中心' },
+        },
+        {
           path: 'traffic-monitor/product-traffic-monitor',
           name: 'ProductTrafficMonitor',
           component: () => import('@/views/traffic-monitor/ProductTrafficMonitor.vue'),

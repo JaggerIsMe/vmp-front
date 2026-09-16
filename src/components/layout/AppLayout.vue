@@ -93,6 +93,7 @@ const menuIconMap = {
   '/marketing-dashboard/shopify/order-list': Tickets,
   '/advertising-center': Promotion,
   '/advertising-center/google-ads': Promotion,
+  '/advertising-center/meta-ads': Promotion,
   '/traffic-monitor': Monitor,
   '/traffic-monitor/product-traffic-monitor': DataLine,
   '/traffic-monitor/aba-keyword-heat-monitor': Search,

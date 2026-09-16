@@ -19,6 +19,8 @@ import './assets/styles/shopify.order.product.selector.scss'
 import './assets/styles/shopify.product.sales.performance.scss'
 import './assets/styles/google.ads.scss'
 import './assets/styles/google.ads.allocate.person.dialog.scss'
+import './assets/styles/meta.ads.scss'
+import './assets/styles/meta.ads.allocate.person.dialog.scss'
 import './assets/styles/cross.platform.product.selector.dialog.scss'
 
 import Verify from './utils/Verify'
